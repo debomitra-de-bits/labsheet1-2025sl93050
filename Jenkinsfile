@@ -26,7 +26,7 @@ assert multiply(2,3) == 6
 assert subtract(5,2) == 3
 assert divide(10,2) == 5
 
-print("All tests passed!")
+print('All tests passed!')
 "
                 '''
             }
