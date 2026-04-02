@@ -2,15 +2,17 @@ pipeline {
     agent any
 
     stages {
+
         stage('Checkout') {
             steps {
                 echo 'Checking out code...'
+                checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Build stage'
+                echo 'Build stage (no compilation needed for Python)'
             }
         }
 
@@ -35,9 +37,11 @@ print('All tests passed')
         stage('Deploy') {
             steps {
                 echo 'Deploying to EC2...'
+                sshagent(['aws-key']) {
                     sh '''
-                    scp -i /home/cloud/security.pem -o StrictHostKeyChecking=no calculator.py ec2-user@51.21.1.124:/home/ec2-user/
+                    scp -o StrictHostKeyChecking=no calculator.py ec2-user@<PUBLIC-IP>:/home/ec2-user/
                     '''
+                }
             }
         }
     }
