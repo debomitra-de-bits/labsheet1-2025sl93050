@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Build stage (no compilation needed for Python)'
+                echo 'Build stage'
             }
         }
 
@@ -26,19 +26,21 @@ assert multiply(2,3) == 6
 assert subtract(5,2) == 3
 assert divide(10,2) == 5
 
-print('All tests passed!')
+print('All tests passed')
 "
                 '''
             }
         }
 
         stage('Deploy') {
-		 steps {
-			echo 'Deploying to EC2...'
-                        sshagent(['aws-key']) {
-                          sh '''
-                          scp -o StrictHostKeyChecking=no calculator.py ec2-user@51.21.1.124:/home/ec2-user/
-                          '''
+            steps {
+                echo 'Deploying to EC2...'
+                sshagent(['aws-key']) {
+                    sh '''
+                    scp -o StrictHostKeyChecking=no calculator.py ec2-user@51.21.1.124:/home/ec2-user/
+                    '''
+                }
+            }
         }
     }
 }
