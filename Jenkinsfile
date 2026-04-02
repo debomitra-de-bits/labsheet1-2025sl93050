@@ -33,9 +33,12 @@ print('All tests passed!')
         }
 
         stage('Deploy') {
-            steps {
-                echo 'Deploy stage (dummy)'
-            }
+		 steps {
+			echo 'Deploying to EC2...'
+                        sshagent(['aws-key']) {
+                          sh '''
+                          scp -o StrictHostKeyChecking=no calculator.py ec2-user@51.21.1.124:/home/ec2-user/
+                          '''
         }
     }
 }
