@@ -39,7 +39,7 @@ print('All tests passed')
                 echo 'Deploying to EC2...'
                 sshagent(['aws-key']) {
                     sh '''
-                    scp -o StrictHostKeyChecking=no calculator.py ec2-user@<PUBLIC-IP>:/home/ec2-user/
+                    scp -o StrictHostKeyChecking=no calculator.py ec2-user@51.21.1.124:/home/ec2-user/
                     '''
                 }
             }
